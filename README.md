@@ -1,4 +1,4 @@
-# sshkeysfrompublic
+# addkeys
 Simple script to allow you to easily setup authorised key files from publicly accessible SSH keys - Primarily GitHub and GitLab instances
 
 # Usage
@@ -12,7 +12,7 @@ Simple script to allow you to easily setup authorised key files from publicly ac
 | -h | --help | Output the usage information |  |
 
 # Download
-`curl -o ./addkeys http://sshkeys.ashleyhindle.com/addkeys` (HTTPs incoming)
+`curl -o ./addkeys http://addkeys.ashleyhindle.com/addkeys` (HTTPs incoming)
 
 # Examples
 **Add my SSH keys to roots authorized keys file**  
