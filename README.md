@@ -1,5 +1,7 @@
 # addkeys
-Simple script to allow you to easily setup authorised key files from publicly accessible SSH keys - Primarily GitHub and GitLab instances
+Simple script to allow you to easily setup authorised key files from publicly accessible SSH keys - Primarily GitHub and GitLab instances.
+
+This is really useful for automated server provisioning - this can easily be added to your Linode StackScript, Ansible/Puppet/Salt scripts or bash provisioning scripts.
 
 # Usage
 | Short Option | Long Option | Description | Example |
