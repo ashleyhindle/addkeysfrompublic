@@ -12,7 +12,7 @@ Simple script to allow you to easily setup authorised key files from publicly ac
 | -h | --help | Output the usage information |  |
 
 # Download
-`curl -o ./addkeys http://addkeys.ashleyhindle.com/addkeys` (HTTPs incoming)
+`curl -s -o ./addkeys http://addkeys.ashleyhindle.com/addkeys` (HTTPs incoming)
 
 # Examples
 **Add my SSH keys to roots authorized keys file**  
