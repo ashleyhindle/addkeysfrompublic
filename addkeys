@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# This script requires curl to be installed - http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+command -v curl >/dev/null 2>&1 || { echo >&2 "curl is required but is not installed/usable. Please install curl or fix the path and try again. Aborting."; exit 1; }
+command -v echo >/dev/null 2>&1 || { echo >&2 "echo is required but is not installed/usable. Please install echo or fix the path and try again. Aborting."; exit 1; }
+command -v chmod >/dev/null 2>&1 || { echo >&2 "chmod is required but is not installed/usable. Please install chmod or fix the path and try again. Aborting."; exit 1; }
+
+usage(){
+	echo "Usage: $0 [-v|--verbose] [-b|--baseurl 'https://github.com/'] -u 'comma,separated,usernames' -f '/root/.ssh/authorized_keys'"
+	exit 1
+}
+
+help(){
+    usage
+    exit 0
+}
+
+VERBOSE=false
+SETPERMS=true
+
+##http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+while [[ $# > 0 ]]
+do
+    key="$1"
+
+    case $key in
+        -b|--baseurl)
+        BASEURL="$2"
+        shift # past argument
+        ;;
+        -f|--file)
+        AUTHORISED_KEYS_FILE="$2"
+        shift # past argument
+        ;;
+        -u|--usernames)
+        USERNAMES="$2"
+        shift # past argument
+        ;;
+        -h|--help)
+        help
+        shift # past argument
+        ;;
+        -v|--verbose)
+        VERBOSE=true
+        shift # past argument
+        ;;
+        -p|--perms)
+        SETPERMS=false
+        shift # past argument
+        ;;
+        *)
+                # unknown option
+        ;;
+    esac
+    shift # past argument or value
+done
+
+if [ -z "$AUTHORISED_KEYS_FILE" ]; then
+	echo "You must pass an authorized keys file"
+	usage
+	exit 1
+fi
+
+if [ -z "$USERNAMES" ]; then
+	echo "You must pass usernames"
+	usage
+	exit 1
+fi
+
+if [ -z "$BASEURL" ]; then
+	echo "No base url provided, defaulting to https://github.com/"
+	BASEURL="https://github.com/"
+fi
+
+if [ ! -w "$AUTHORISED_KEYS_FILE" ]; then
+	echo "Authorized keys file isn't writable"
+	exit 1
+fi
+
+IFS=',' read -ra people <<< "$USERNAMES"
+for person in "${people[@]}"
+do :
+	echo "Appending: ${BASEURL}/${person}.keys to ${AUTHORISED_KEYS_FILE}"
+	keys=$(curl -s "${BASEURL}/${person}.keys")
+
+	if [ ! -z "$keys" ];
+	then
+        if grep -Fxq "${keys}" $AUTHORISED_KEYS_FILE
+        then
+            echo "${person}'s keys already added, not re-adding"
+        else
+            echo "${keys}" >> $AUTHORISED_KEYS_FILE
+            echo "${person}'s keys successfully added"
+            if [ "${VERBOSE}" = true ];
+            then
+                echo "----"
+                echo "${keys}"
+                echo "----"
+            fi
+        fi
+	else
+		echo "Couldn't get keys for ${person} - curl failed"
+	fi
+done
+
+if [ "${SETPERMS}" = true ];
+then
+    chmod 600 $AUTHORISED_KEYS_FILE
+fi
+
+exit 0
