@@ -73,8 +73,11 @@ if [ -z "$BASEURL" ]; then
 fi
 
 if [ ! -w "$AUTHORISED_KEYS_FILE" ]; then
-	echo "Authorized keys file isn't writable: ${AUTHORISED_KEYS_FILE} - does the .ssh directory exist?"
-	exit 1
+	mkdir -p "$(dirname "$AUTHORISED_KEYS_FILE")" && touch "$AUTHORISED_KEYS_FILE"
+	if [ ! -w "$AUTHORISED_KEYS_FILE" ]; then
+		echo "Authorized keys file isn't writable: ${AUTHORISED_KEYS_FILE} - and we failed to create it for you"
+		exit 1
+	fi
 fi
 
 IFS=',' read -ra people <<< "$USERNAMES"
