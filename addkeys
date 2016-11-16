@@ -73,7 +73,7 @@ if [ -z "$BASEURL" ]; then
 fi
 
 if [ ! -w "$AUTHORISED_KEYS_FILE" ]; then
-	echo "Authorized keys file isn't writable"
+	echo "Authorized keys file isn't writable: ${AUTHORISED_KEYS_FILE} - does the .ssh directory exist?"
 	exit 1
 fi
 
