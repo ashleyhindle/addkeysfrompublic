@@ -84,23 +84,23 @@ IFS=',' read -ra people <<< "$USERNAMES"
 for person in "${people[@]}"
 do :
 	echo "Appending: ${BASEURL}/${person}.keys to ${AUTHORISED_KEYS_FILE}"
-	keys=$(curl -s "${BASEURL}/${person}.keys")
+	keys=$(curl -f -s "${BASEURL}/${person}.keys")
 
 	if [ ! -z "$keys" ];
 	then
-        if grep -Fxq "${keys}" $AUTHORISED_KEYS_FILE
-        then
-            echo "${person}'s keys already added, not re-adding"
-        else
-            echo "${keys}" >> $AUTHORISED_KEYS_FILE
-            echo "${person}'s keys successfully added"
-            if [ "${VERBOSE}" = true ];
-            then
-                echo "----"
-                echo "${keys}"
-                echo "----"
-            fi
-        fi
+		if grep -Fxq "${keys}" $AUTHORISED_KEYS_FILE
+		then
+		    echo "${person}'s keys already added, not re-adding"
+		else
+		    echo "${keys}" >> $AUTHORISED_KEYS_FILE
+		    echo "${person}'s keys successfully added"
+		    if [ "${VERBOSE}" = true ];
+		    then
+			echo "----"
+			echo "${keys}"
+			echo "----"
+		    fi
+		fi
 	else
 		echo "Couldn't get keys for ${person} - curl failed"
 	fi
