@@ -6,7 +6,7 @@ command -v echo >/dev/null 2>&1 || { echo >&2 "echo is required but is not insta
 command -v chmod >/dev/null 2>&1 || { echo >&2 "chmod is required but is not installed/usable. Please install chmod or fix the path and try again. Aborting."; exit 1; }
 
 usage(){
-	echo "Usage: $0 [-v|--verbose] [-b|--baseurl 'https://github.com/']  [-f|--file '/root/.ssh/authorized_keys'] [-p|--perms] -u|--users 'comma,separated,usernames' "
+	echo "Usage: $0 [-v|--verbose] [-b|--baseurl 'https://github.com/'] [-f|--file '/root/.ssh/authorized_keys'] [-p|--perms] -u|--users 'comma,separated,usernames' "
 	exit 1
 }
 
@@ -95,9 +95,9 @@ do :
 		    echo "${person}'s keys successfully added"
 		    if [ "${VERBOSE}" = true ];
 		    then
-			echo "----"
-			echo "${keys}"
-			echo "----"
+                echo "----"
+                echo "${keys}"
+                echo "----"
 		    fi
 		fi
 	else
@@ -107,7 +107,10 @@ done
 
 if [ "${SETPERMS}" = true ];
 then
-    echo "Set permissions on ${AUTHORISED_KEYS_FILE} to 600"
+    if [ "${VERBOSE}" = true ];
+    then
+        echo "Set permissions on ${AUTHORISED_KEYS_FILE} to 600"
+    fi
     chmod 600 ${AUTHORISED_KEYS_FILE}
 fi
 
