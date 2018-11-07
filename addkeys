@@ -42,11 +42,11 @@ do
         ;;
         -v|--verbose)
         VERBOSE=true
-        shift # past argument
+#        shift # past argument
         ;;
         -p|--perms)
         SETPERMS=false
-        shift # past argument
+#        shift # past argument
         ;;
         *)
                 # unknown option
