@@ -6,7 +6,7 @@ command -v echo >/dev/null 2>&1 || { echo >&2 "echo is required but is not insta
 command -v chmod >/dev/null 2>&1 || { echo >&2 "chmod is required but is not installed/usable. Please install chmod or fix the path and try again. Aborting."; exit 1; }
 
 usage(){
-	echo "Usage: $0 [-v|--verbose] [-b|--baseurl 'https://github.com/'] -u 'comma,separated,usernames' -f '/root/.ssh/authorized_keys'"
+	echo "Usage: $0 [-v|--verbose] [-b|--baseurl 'https://github.com/']  [-f|--file '/root/.ssh/authorized_keys'] [-p|--perms] -u|--users 'comma,separated,usernames' "
 	exit 1
 }
 
@@ -32,7 +32,7 @@ do
         AUTHORISED_KEYS_FILE="$2"
         shift # past argument
         ;;
-        -u|--usernames)
+        -u|--users)
         USERNAMES="$2"
         shift # past argument
         ;;
@@ -56,9 +56,8 @@ do
 done
 
 if [ -z "$AUTHORISED_KEYS_FILE" ]; then
-	echo "You must pass an authorized keys file"
-	usage
-	exit 1
+	echo "No authorised_key_file provided, defaulting to /root/.ssh/authorized_keys"
+	AUTHORISED_KEYS_FILE="/root/.ssh/authorized_keys"
 fi
 
 if [ -z "$USERNAMES" ]; then
@@ -108,7 +107,8 @@ done
 
 if [ "${SETPERMS}" = true ];
 then
-    chmod 600 $AUTHORISED_KEYS_FILE
+    echo "Set permissions on ${AUTHORISED_KEYS_FILE} to 600"
+    chmod 600 ${AUTHORISED_KEYS_FILE}
 fi
 
 exit 0

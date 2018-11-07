@@ -9,19 +9,20 @@
 </head>
 <body class="container mx-auto p-5">
     <h1>How to use
-        <button id="copy-command-button" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded text-sm" data-clipboard-text="bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -f /root/.ssh/authorized_keys -u users,go,here">Click to copy</button>
+        <button id="copy-command-button" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded text-sm" data-clipboard-text="bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -u username,goes,here">Click to copy</button>
     </h1>
-    <div class="mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
-        bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -f <span class="font-semibold">/root/.ssh/authorized_keys</span> -u <span class="font-semibold">ashleyhindle,baby.driver</span>
+    <div class="rounded mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
+        bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -u <span class="font-semibold">ashleyhindle,baby.driver</span>
     </div>
 
     <h1 class="mt-10">Usage</h1>
-    <div class="mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
-        ./addkeys<br />
+    <div class="rounded mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
+        <div class="font-semibold">./addkeys</div>
         [-v|--verbose]<br />
-        [-b|--baseurl 'https://github.com/']<br />
-        -u 'comma,separated,usernames'<br />
-        -f '/root/.ssh/authorized_keys'<br />
+        [-b|--baseurl 'https://github.com/'] (Where should we get the keys from?)<br />
+        [-f|--files '/root/.ssh/authorized_keys'] (Where should we add the keys?)<br />
+        [--perms 0] (Don't set the permissions on the file to 600)<br /><br />
+        <div class="font-semibold">-u 'comma,separated,usernames'</div>
     </div>
 
     <h1 class="mt-10">Examples</h1>
