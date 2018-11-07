@@ -1,21 +1,107 @@
-  <html>
-  <style>
-  pre {
-     padding: 2px 4px;
-     font-size: 90%;
-     color: #c7254e;
-     background-color: #f9f2f4;
-     border-radius: 3px;
-     font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
-     white-space: pre-wrap;
-     word-wrap: normal;
-     }
- </style>
- <body>
-   <pre>
-bash <(curl -s http://addkeys.ashleyhindle.com/addkeys) -f /root/.ssh/authorized_keys -u ashleyhindle</pre>
-   <hr />
-   <a href='https://github.com/ashleyhindle/addkeysfrompublic#usage'>Usage</a> <br/>
- <a href='https://github.com/ashleyhindle/addkeysfrompublic'>https://github.com/ashleyhindle/addkeysfrompublic</a>
- </body>
- </html>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+</head>
+<body class="container mx-auto p-5">
+    <h1>How to use
+        <button id="copy-command-button" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded text-sm" data-clipboard-text="bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -f /root/.ssh/authorized_keys -u users,go,here">Click to copy</button>
+    </h1>
+    <div class="mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
+        bash <(curl -s https://addkeys.ashleyhindle.com/addkeys) -f <span class="font-semibold">/root/.ssh/authorized_keys</span> -u <span class="font-semibold">ashleyhindle,baby.driver</span>
+    </div>
+
+    <h1 class="mt-10">Usage</h1>
+    <div class="mt-4 font-mono border-green-darker border-2 bg-green-lighter text-grey-darkest p-2">
+        ./addkeys<br />
+        [-v|--verbose]<br />
+        [-b|--baseurl 'https://github.com/']<br />
+        -u 'comma,separated,usernames'<br />
+        -f '/root/.ssh/authorized_keys'<br />
+    </div>
+
+    <h1 class="mt-10">Examples</h1>
+    <table class="mt-4 w-full text-left table-collapse">
+        <thead>
+        <tr>
+            <th class="text-sm font-semibold text-white p-2 bg-grey-darker">
+                Type
+            </th>
+            <th class="text-sm font-semibold text-white p-2 bg-grey-darker">
+                Command
+            </th>
+        </tr>
+        </thead>
+        <tbody class="align-baseline">
+        <tr>
+            <td class="p-2">
+                1 user from GitHub to 'root' user
+            </td>
+            <td class="p-2 text-green-dark">
+                ./addkeys -u <span class="font-semibold text-green">ashleyhindle</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-2">
+                2 users from GitHub to 'root' user
+            </td>
+            <td class="p-2 text-green-dark">
+                ./addkeys -u <span class="font-semibold text-green">ashleyhindle,baby.driver</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-2">
+                1 user from GitHub to 'sysops' user
+            </td>
+            <td class="p-2 text-green-dark">
+                ./addkeys -f <span class="font-semibold text-green">/home/sysops/.ssh/authorized_keys</span> -u <span class="font-semibold text-green">ashleyhindle</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-2">
+                1 user from private GitLab to 'root' user
+            </td>
+            <td class="p-2 text-green-dark">
+                ./addkeys -b <span class="font-semibold text-green">https://gitlab.companyname.com</span> -u <span class="font-semibold text-green">ashleyhindle</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-2">
+                1 user from private GitLab to 'sysops' user
+            </td>
+            <td class="p-2 text-green-dark">
+                ./addkeys -b https://gitlab.companyname.com -f /home/sysops/.ssh/authorized_keys -u ashleyhindle
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1 class="mt-10">Notes</h1>
+    <div class="mt-4 py-4 px-1">
+        The default 'baseurl' is GitHub.com and the default 'file' <span class="font-mono">/root/.ssh/authorized_keys</span>
+    </div>
+
+    <h1 class="mt-10">Links</h1>
+    <ul class="list-reset mt-4">
+        <li><a href='https://github.com/ashleyhindle/addkeysfrompublic#usage'>Usage</a></li>
+        <li><a href='https://github.com/ashleyhindle/addkeysfrompublic'>GitHub</a></li>
+    </ul>
+
+    <script>
+        let element = document.getElementById('copy-command-button');
+        let clipboard = new ClipboardJS(element);
+        let timeout;
+
+        clipboard.on('success', function() {
+           element.innerHTML = 'Copied!';
+           timeout = setTimeout(function() {
+               element.innerHTML = 'Click to copy';
+           }, 2000);
+        });
+    </script>
+</body>
+</html>
