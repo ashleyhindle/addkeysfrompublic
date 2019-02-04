@@ -14,7 +14,7 @@ This is really useful for automated server provisioning - this can easily be add
 | -h | --help | Output the usage information |  |
 
 # Download
-`curl -s -o ./addkeys http://addkeys.ashleyhindle.com/addkeys; chmod a+x addkeys` (HTTPs incoming)
+`curl -s -o ./addkeys https://addkeys.ashleyhindle.com/addkeys; chmod a+x addkeys` (HTTPs incoming)
 
 # Examples
 **Add my SSH keys to roots authorized keys file**  
